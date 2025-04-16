@@ -7,7 +7,8 @@ class User < ApplicationRecord
   validates :nickname, presence: true
 
   validates :password, format: {
-    with: /\A(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,}\z/,
+    # with: /\A(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,}\z/,
+    with: /\A(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]+\z/,
     message: 'は6文字以上の半角英数字で入力してください（英字と数字の両方を含む）'
   }, if: -> { password.present? }
 
