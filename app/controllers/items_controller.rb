@@ -13,6 +13,7 @@ class ItemsController < ApplicationController
       redirect_to root_path
     else
       render :new, status: :unprocessable_entity
+    end
   end
 
 
@@ -20,11 +21,10 @@ class ItemsController < ApplicationController
 
   def item_params
     params.require(:item).permit(
-      :image, :nickname, :description, :category_id, 
+      :image, :name, :description, :category_id, 
       :condition_id, :shipping_fee_id, :prefecture_id, 
       :delivery_time_id, :price 
-      )
-      .merge(user_id: current_user.id )
-    end
+    ).merge(user_id: current_user.id )
+    
   end
 end

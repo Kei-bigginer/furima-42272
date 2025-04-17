@@ -8,9 +8,10 @@ class Item < ApplicationRecord
 
   belongs_to :user
   has_one_attached :image
+  # ActiveStorage で管理されてる「特別なやつ」
+  validate :image_presence
 
-  
-  validates :nickname, presence: true
+  validates :name, presence: true
   validates :description, presence: true
   validates :category_id, presence: true
   validates :condition_id, presence: true
@@ -18,6 +19,14 @@ class Item < ApplicationRecord
   validates :prefecture_id, presence: true
   validates :delivery_time_id, presence: true
   validates :price, presence: true
+  validates :price, numericality: {
+     only_integer: true, 
+     greater_than_or_equal_to: 300 ,
+     less_than_or_equal_to: 9999999,
+    message: ":価格は、¥300~¥9,999,999の間で指定してください"	},
+    format: {with: /\A[0-9]+\z/, message:":半角数字で入力してください" }
+
+
   validates :user, presence: true
 
   validates :category_id, numericality: { 
@@ -45,8 +54,11 @@ class Item < ApplicationRecord
     message: "can't be blank" 
   } 
 
+  private
 
-
-
-
+  def image_presence
+    unless image.attached?
+      errors.add(:image, "can't be blank")
+    end
+  end 
 end
