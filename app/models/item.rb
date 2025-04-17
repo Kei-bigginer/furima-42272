@@ -8,7 +8,7 @@ class Item < ApplicationRecord
 
   belongs_to :user
   has_one_attached :image
-  # ActiveStorage で管理されてる「特別なやつ」
+
   validate :image_presence
 
   validates :name, presence: true
