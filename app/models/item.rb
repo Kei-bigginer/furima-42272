@@ -19,11 +19,9 @@ class Item < ApplicationRecord
      only_integer: true, 
      greater_than_or_equal_to: 300 ,
      less_than_or_equal_to: 9999999,
-    message: ":価格は、¥300~¥9,999,999の間で指定してください"	},
-    format: {with: /\A[0-9]+\z/, message:":半角数字で入力してください" }
+    message: ":価格は、¥300~¥9,999,999の間で指定してください"	}
 
 
-  validates :user, presence: true
 
   validates :category_id, numericality: { 
     other_than: 1 , 
