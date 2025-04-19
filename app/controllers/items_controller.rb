@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_item, only: [:show, :edit, :update]
+  before_action :set_item, only: [:show, :edit, :update, :destroy ]
+  before_action :move_top_unless_owner, only: [:edit, :update, :destroy]
 
   def index
     @items = Item.order(created_at: :desc)
@@ -23,7 +24,6 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    redirect_to root_path if current_user != @item.user
   end
 
   def update
@@ -34,10 +34,9 @@ class ItemsController < ApplicationController
     end
   end
 
-  # @item = Item.find(params[:id]) あとでまとめる
   def destroy
-    @item = Item.find(params[:id]) 
-    redirect_to root_path if @item.destroy
+      @item.destroy
+      redirect_to root_path
   end
 
   private
@@ -46,12 +45,17 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
+  def move_top_unless_owner
+    redirect_to root_path unless current_user == @item.user
+  end
+
   def item_params
     params.require(:item).permit(
       :image, :name, :description, :category_id, 
       :condition_id, :shipping_fee_id, :prefecture_id, 
       :delivery_time_id, :price 
     ).merge(user_id: current_user.id )
-    
   end
+
+
 end
