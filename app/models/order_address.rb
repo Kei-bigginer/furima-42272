@@ -17,7 +17,7 @@ class OrderAddress
      minimum: 10, 
       message: 'is too short' 
     }
-
+ 
   def save
     order = Order.create(user_id: user_id, item_id: item_id)
     Address.create(
