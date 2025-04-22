@@ -5,9 +5,10 @@ class Item < ApplicationRecord
   belongs_to :shipping_fee
   belongs_to :prefecture 
   belongs_to :delivery_time
-
+ 
   belongs_to :user
   has_one_attached :image
+  has_one :order
 
   validate :image_presence
 
