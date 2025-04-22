@@ -15,9 +15,11 @@
 
            
       <%# 商品が売れている場合は、sold outを表示しましょう %> <!--購入機能実装後のためコメントアウト -->
-      <%# <div class="sold-out">
+      <% if @item.order.present? %>
+      <div class="sold-out">
         <span>Sold Out!!</span>
-      </div> %>
+      </div>
+      <% end %>
       <%# //商品が売れている場合は、sold outを表示しましょう %>
 
     </div>
@@ -30,7 +32,7 @@
       </span>
     </div>
 
-  <% if user_signed_in? %>
+  <% if user_signed_in? && @item.order.blank? %>
     <% if current_user == @item.user %>
 
         <%= link_to "商品の編集", edit_item_path(@item), method: :get, class: "item-red-btn" %> 
