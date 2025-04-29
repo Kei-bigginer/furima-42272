@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
   before_action :set_item
   before_action :move_top_if_sold_out
   before_action :move_to_root_if_seller
-
+ 
 
   def index
     gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
@@ -56,3 +56,7 @@ class OrdersController < ApplicationController
   end
 
 end
+
+
+
+
